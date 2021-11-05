@@ -26,7 +26,7 @@ const ListItem = styled(({ className, active, level, ...props }) => {
     position: relative;
 
     &:hover {
-      color: #1ed3c6 !important;
+      color: #6699CC !important;
     }
 
     ${(props) =>
@@ -46,7 +46,7 @@ const ListItem = styled(({ className, active, level, ...props }) => {
 `;
 
 const Sidebar = styled('aside')`
-  width: 100%;
+  width: 20vw;
   height: 100vh;
   overflow: auto;
   position: fixed;

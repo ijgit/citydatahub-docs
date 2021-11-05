@@ -76,7 +76,7 @@ export const baseStyles = css`
     border-radius: 1px;
     margin: 0 auto;
     margin-top: 4px;
-    background-color: #001934;
+    background-color: #252B2E;
   }
   .navBarToggle .iconBar:first-child {
     margin-top: 0px;
@@ -134,7 +134,7 @@ export const baseStyles = css`
 
   .navbar-default .navbar-toggle:focus,
   .navbar-default .navbar-toggle:hover {
-    background-color: #001933;
+    background-color: #252B2E;
   }
 
   .headerWrapper {
@@ -257,7 +257,7 @@ export const baseStyles = css`
     padding: 0 !important;
   }
   .navBarDefault {
-    background-color: #001934;
+    background-color: #252B2E;
     border-radius: 0;
     border-top: 0;
     margin-bottom: 0;
@@ -373,7 +373,7 @@ export const baseStyles = css`
     font-family: 'Poppins';
     font-size: 18px;
     font-weight: 600;
-    color: #001934;
+    color: #252B2E;
     display: flex;
     align-items: center;
   }
@@ -383,7 +383,7 @@ export const baseStyles = css`
   }
 
   .sidebarTitle a {
-    color: #001934;
+    color: #252B2E;
   }
 
   .greenCircle {
@@ -397,14 +397,14 @@ export const baseStyles = css`
   .headerNav {
     font-family: 'Roboto';
     padding: 0px 24px;
-    color: #001933;
+    color: #252B2E;
     font-size: 16px;
     font-weight: 500;
     line-height: 1em;
   }
 
-  .headerNav a {
-    color: #001933;
+  .headerNav a {s
+    color: #252B2E;
     text-decoration: none;
   }
 
@@ -449,14 +449,14 @@ export const baseStyles = css`
   }
 
   .hideFrontLine .active > a {
-    background-color: #1ed3c6;
+    background-color: #6699CC;
     color: #fff !important;
   }
   .firstLevel ul li .collapser svg path {
     fill: #fff !important;
   }
   .active .collapser > svg > path {
-    fill: #001933 !important;
+    fill: #252B2E !important;
   }
 
   .firstLevel ul .item ul .item {
@@ -469,7 +469,7 @@ export const baseStyles = css`
   }
 
   .sideBarUL .item > a {
-    color: #1ED3C6;
+    color: #6699CC;
     text-decoration: none;
     display: flex;
     align-items: center;
@@ -480,12 +480,12 @@ export const baseStyles = css`
   }
 
   .showFrontLine .item > a:hover {
-    background-color: #001933;
+    background-color: #252B2E;
   }
 
   .showFrontLine .active > a {
     /* color: #fff; */
-    background-color: #001933;
+    background-color: #252B2E;
   }
 
   .sideBarUL .item .item {
@@ -507,7 +507,7 @@ export const baseStyles = css`
     border-color: rgb(230, 236, 241) !important;
     border-style: solid none solid solid;
     border-width: 1px 0px 1px 1px;
-    background-color: #1ed3c6 !important;
+    background-color: #6699CC !important;
     color: #fff;
   }
 
@@ -733,13 +733,12 @@ export const baseStyles = css`
 
   @media (max-width: 767px) {
     .formElement svg path {
-      fill: #001934;
+      fill: #252B2E;
     }
     .visibleMobileView {
       display: block !important;
     }
     .searchInput {
-      color: #001934;
     }
     .socialWrapper {
       position: absolute;

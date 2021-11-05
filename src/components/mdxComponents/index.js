@@ -5,10 +5,10 @@ import CodeBlock from './codeBlock';
 import AnchorTag from './anchor';
 
 const StyledPre = styled('pre')`
-  padding: 16px;
-  background: ${(props) => props.theme.colors.preFormattedText};
 `;
-
+// padding: 16px;
+//  background: ${(props) => props.theme.colors.preFormattedText};
+  
 const appendString = (children) => {
   if (Array.isArray(children)) {
     return children.reduce((acc, current) => {
