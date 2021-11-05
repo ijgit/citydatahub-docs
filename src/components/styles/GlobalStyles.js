@@ -696,15 +696,15 @@ export const baseStyles = css`
 
   .heading5 {
     font-size: 16px;
-    font-weight: 400;
+    font-weight: 500;
     line-height: 1.5;
     margin-bottom: 16px;
     margin-top: 32px;
   }
 
   .heading6 {
-    font-size: 14px;
-    font-weight: 300;
+    font-size: 15px;
+    font-weight: 500;
     line-height: 1.5;
     margin-bottom: 16px;
     margin-top: 32px;
