@@ -4,10 +4,10 @@ import { StaticQuery, graphql } from 'gatsby';
 import GitHubButton from 'react-github-btn';
 import Link from './link';
 import Loadable from 'react-loadable';
-
 import config from '../../config.js';
 import LoadingProvider from './mdxComponents/loading';
 import { DarkModeSwitch } from './DarkModeSwitch';
+import logoImg from './images/logo-only.png'
 
 const help = require('./images/help.svg');
 
@@ -76,7 +76,6 @@ const Header = ({ location, isDarkThemeActive, toggleActiveTheme }) => (
       }
     `}
     render={(data) => {
-      const logoImg = require('./images/logo.svg');
 
       const twitter = require('./images/twitter.svg');
 
@@ -90,17 +89,19 @@ const Header = ({ location, isDarkThemeActive, toggleActiveTheme }) => (
         },
       } = data;
 
-      const finalLogoLink = logo.link !== '' ? logo.link : 'https://hasura.io/';
+      const finalLogoLink = logo.link;
 
       return (
         <div className={'navBarWrapper'}>
           <nav className={'navBarDefault'}>
             <div className={'navBarHeader'}>
+
               <Link to={finalLogoLink} className={'navBarBrand'}>
                 <img
-                  className={'img-responsive displayInline'}
+                  // className={'img-responsive displayInline'}
                   src={logo.image !== '' ? logo.image : logoImg}
                   alt={'logo'}
+                  width='32px'
                 />
               </Link>
               <div
@@ -108,17 +109,21 @@ const Header = ({ location, isDarkThemeActive, toggleActiveTheme }) => (
                 dangerouslySetInnerHTML={{ __html: headerTitle }}
               />
             </div>
+
             {config.header.social ? (
               <ul
                 className="socialWrapper visibleMobileView"
                 dangerouslySetInnerHTML={{ __html: config.header.social }}
               ></ul>
             ) : null}
+
             {isSearchEnabled ? (
               <div className={'searchWrapper hiddenMobile navBarUL'}>
                 <LoadableComponent collapse={true} indices={searchIndices} />
               </div>
             ) : null}
+
+
             <div id="navbar" className={'topnav'}>
               <div className={'visibleMobile'}>
                 <Sidebar location={location} />

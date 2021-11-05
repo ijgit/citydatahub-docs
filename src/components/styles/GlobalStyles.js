@@ -286,7 +286,6 @@ export const baseStyles = css`
   }
 
   .navBarBrand img {
-    width: 120px;
     margin-right: 6px;
     display: inline-block;
   }
