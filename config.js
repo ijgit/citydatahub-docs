@@ -1,7 +1,7 @@
 const config = {
   gatsby: {
     pathPrefix: '/',
-    siteUrl: 'citydatahub.kr',
+    siteUrl: 'http://citydatahub.kr',
     gaTrackingId: null,
     trailingSlash: false,
   },
@@ -42,6 +42,7 @@ const config = {
     forcedNavOrder: [
       '/introduction', // add trailing slash if enabled above
       '/codeblock',
+      '/test'
     ],
     collapsedNav: [
       '/codeblock', // add trailing slash if enabled above
