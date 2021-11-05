@@ -39,7 +39,8 @@ export const Edit = styled('div')`
 `;
 
 export const StyledMainWrapper = styled.div`
-  max-width: 750px;
+  width: 50vw;
+  max-width: 50vw;
   color: ${props => props.theme.colors.text};
 
   ul,
