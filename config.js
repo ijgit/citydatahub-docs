@@ -8,7 +8,9 @@ const config = {
   header: {
     logo: ``, //'https://graphql-engine-cdn.hasura.io/learn-hasura/assets/homepage/brand.svg',
     logoLink: '', //'https://hasura.io/learn/',
-    title: `<h1>Documents</h1>`,
+    title: `<div>
+              <a href='/'><h1>Document</h1></a>
+            </div>`,
     githubUrl: '',
     helpUrl: '',
     tweetText: '',
