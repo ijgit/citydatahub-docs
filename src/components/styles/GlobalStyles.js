@@ -128,6 +128,7 @@ export const baseStyles = css`
     opacity: 1;
   }
 
+
   .navbar-default .navbar-toggle .icon-bar {
     background-color: #fff !important;
   }
@@ -729,6 +730,7 @@ export const baseStyles = css`
   }
   .topnav {
     -webkit-transition: top 0.5s, bottom 0.5s;
+    margin-left: auto;
   }
 
   @media (max-width: 767px) {
