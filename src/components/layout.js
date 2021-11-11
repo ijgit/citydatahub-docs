@@ -31,6 +31,7 @@ const Wrapper = styled('div')`
 
 const Content = styled('main')`
   display: flex;
+  justify-content: center;
   flex-grow: 1;
   margin: 0px 88px;
   padding-top: 3rem;
