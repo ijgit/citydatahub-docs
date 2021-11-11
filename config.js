@@ -1,7 +1,7 @@
 const config = {
   gatsby: {
-    pathPrefix: '/docs',
-    siteUrl: 'http://citydatahub.kr',
+    pathPrefix: '',
+    siteUrl: 'http://docs.citydatahub.kr',
     gaTrackingId: null,
     trailingSlash: false,
   },
