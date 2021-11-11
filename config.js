@@ -1,13 +1,13 @@
 const config = {
   gatsby: {
-    pathPrefix: '/',
+    pathPrefix: '/docs',
     siteUrl: 'http://citydatahub.kr',
     gaTrackingId: null,
     trailingSlash: false,
   },
   header: {
-    logo: ``, //'https://graphql-engine-cdn.hasura.io/learn-hasura/assets/homepage/brand.svg',
-    logoLink: '', //'https://hasura.io/learn/',
+    logo: ``,
+    logoLink: '',
     title: `<div>
               <a href='/'><h1>Document</h1></a>
             </div>`,
@@ -26,18 +26,19 @@ const config = {
   },
   sidebar: {
     forcedNavOrder: [
-      '/introduction', // add trailing slash if enabled above
-      '/codeblock',
-      '/setup',
-      '/test'
+      '1_overview',
+      '2_install',
+      '3_init',
+      '4_module',
+      '5_user',
     ],
     collapsedNav: [
-      '/codeblock', // add trailing slash if enabled above
+      '2_install',
     ],
     links: [{ text: 'City Data-Hub', link: 'http://citydatahub.kr' }],
     frontline: false,
     ignoreIndex: true,
-    title:'',   //"<a href='https://hasura.io/learn/'>graphql </a><div class='greenCircle'></div><a href='https://hasura.io/learn/graphql/react/introduction/'>react</a>",
+    title:'',  
   },
   siteMetadata: {
     title: 'City Data-Hub | Documents',

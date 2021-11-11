@@ -1,5 +1,0 @@
----
-title: "setupt"
-metaTitle: ""
-metaDescription: ""
----
