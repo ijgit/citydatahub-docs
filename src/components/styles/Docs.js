@@ -72,7 +72,9 @@ export const StyledMainWrapper = styled.div`
     background: ${props => props.theme.colors.background};
   }
 
-  @media (max-width: 767px) {
+  @media (max-width: 1023px) {
     padding: 0 15px;
+    width: 90vw;
+    max-width: 90vw;
   }
 `;
