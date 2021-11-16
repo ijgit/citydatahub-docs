@@ -8,9 +8,7 @@ const config = {
   header: {
     logo: ``,
     logoLink: '',
-    title: `<div>
-              <a href='/'><h1>Document</h1></a>
-            </div>`,
+    title: '',//`<div><a href='/'><h1>Document</h1></a></div>`,
     githubUrl: '',
     helpUrl: '',
     tweetText: '',

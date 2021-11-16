@@ -7,7 +7,7 @@ import Loadable from 'react-loadable';
 import config from '../../config.js';
 import LoadingProvider from './mdxComponents/loading';
 import { DarkModeSwitch } from './DarkModeSwitch';
-import logoImg from './images/logo-only.png'
+import logoImg from './images/logo.png'
 
 const help = require('./images/help.svg');
 
@@ -101,7 +101,7 @@ const Header = ({ location, isDarkThemeActive, toggleActiveTheme }) => (
                   // className={'img-responsive displayInline'}
                   src={logo.image !== '' ? logo.image : logoImg}
                   alt={'logo'}
-                  width='32px'
+                  height = '32px'
                 />
               </Link>
               <div
@@ -186,12 +186,15 @@ const Header = ({ location, isDarkThemeActive, toggleActiveTheme }) => (
                     </GitHubButton>
                   </li>
                 ) : null}
+                {/*
                 <li>
                   <DarkModeSwitch
                     isDarkThemeActive={isDarkThemeActive}
                     toggleActiveTheme={toggleActiveTheme}
                   />
                 </li>
+                */}
+                
               </ul>
             </div>
           </nav>
