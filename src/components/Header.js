@@ -98,10 +98,12 @@ const Header = ({ location, isDarkThemeActive, toggleActiveTheme }) => (
 
               <Link to={finalLogoLink} className={'navBarBrand'}>
                 <img
+                  className='navBarLogo'
                   // className={'img-responsive displayInline'}
                   src={logo.image !== '' ? logo.image : logoImg}
                   alt={'logo'}
-                  height = '32px'
+                  height = '38px'
+                  width = '182.7px'
                 />
               </Link>
               <div
