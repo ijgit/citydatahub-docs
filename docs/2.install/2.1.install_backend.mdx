@@ -1,0 +1,112 @@
+---
+sidebar_position: 1
+title: "2.1. Backend 설치"
+---
+
+
+# Install Smartcity Backend 
+
+:::caution
+인증/인가 모듈의 Backend 입니다. 실질적인 인증/인가를 담당하며 <br/>
+Node 버전 12, npm v6 이상을 권장합니다.
+:::
+
+## Node js 및 Postgresql 설치
+
+**Centos 7 기준으로 Node js 12를 설치하는 방법은 다음과 같은 순서로 진행됩니다.**
+
+ 1. `sudo yum upgrade`
+
+ 2. `sudo yum update`
+
+ 3. Repository 추가
+
+    `curl -sL https://rpm.nodesource.com/setup_12.x | sudo bash -`
+
+ 4. `sudo yum clean all && sudo yum makecache fast`
+
+    ```bash
+    $ sudo yum clean all && sudo yum makecache fast
+    21 파일이 삭제되었습니다
+    usage: yum makecache [-c [config file]] [-q] [-v] [--version]
+                         [--installroot [path]] [--nodocs] [--noplugins]
+                         [--enableplugin [plugin]] [--disableplugin [plugin]]
+                         [--releasever RELEASEVER] [--setopt SETOPTS]
+                         [--skip-broken] [-h] [--allowerasing] [-b | --nobest]
+                         [-C] [-R [minutes]] [-d [debug level]] [--debugsolver]
+                         [--showduplicates] [-e ERRORLEVEL] [--obsoletes]
+                         [--rpmverbosity [debug level name]] [-y] [--assumeno]
+                         [--enablerepo [repo]] [--disablerepo [repo] | --repo
+                         [repo]] [--enable | --disable] [-x [package]]
+                         [--disableexcludes [repo]] [--repofrompath [repo,path]]
+                         [--noautoremove] [--nogpgcheck] [--color COLOR]
+                         [--refresh] [-4] [-6] [--destdir DESTDIR]
+                         [--downloadonly] [--comment COMMENT] [--bugfix]
+                         [--enhancement] [--newpackage] [--security]
+                         [--advisory ADVISORY] [--bz BUGZILLA] [--cve CVES]
+                         [--sec-severity {Critical,Important,Moderate,Low}]
+                         [--forcearch ARCH] [--timer]
+    yum makecache: error: argument timer: invalid choice: 'fast' (choose from 'timer')
+    ```
+
+    
+
+ 5. `sudo yum install -y gcc-c++make`
+
+    ```bash
+    $ sudo yum install -y gcc-c++make
+    CentOS Linux 8 - AppStream                                                                                  5.0 MB/s | 9.6 MB     00:01    
+    CentOS Linux 8 - BaseOS                                                                                     6.4 MB/s | 8.5 MB     00:01    
+    CentOS Linux 8 - Extras                                                                                      15 kB/s |  10 kB     00:00    
+    Node.js Packages for Enterprise Linux 8 - x86_64                                                            3.3 MB/s | 837 kB     00:00    
+    일치하는 인수가 없습니다: gcc-c++make
+    오류: 일치하는 항목을 찾을 수 없습니다: gcc-c++make
+    ```
+
+    
+
+ 6. `sudo yum install -y nodejs`
+
+    
+
+**Centos 7 기준으로 Postgresql 11을 설치하는 방법은 다음과 같은 순서로 진행됩니다.**
+
+ 1. Repository 추가
+
+     `sudo rpm –Uvh  https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm`
+
+     ```bash
+     $ sudo rpm –Uvh https://download.postgresql.org/pub/repos/yum/reporpms/EL-8-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+     RPM 버전 - 4.14.3
+     Copyright (C) 1998-2002 - Red Hat, Inc.
+     This program may be freely redistributed under the terms of the GNU GPL
+     
+     사용법: rpm [-afgpcdLAlsiv?] [-a|--all] [-f|--file] [-g|--group] [-p|--package] [--pkgid] [--hdrid] [--triggeredby] [--whatconflicts]
+             [--whatrequires] [--whatobsoletes] [--whatprovides] [--whatrecommends] [--whatsuggests] [--whatsupplements] [--whatenhances]
+             [--nomanifest] [-c|--configfiles] [-d|--docfiles] [-L|--licensefiles] [-A|--artifactfiles] [--dump] [-l|--list]
+             [--queryformat=QUERYFORMAT] [-s|--state] [--nofiledigest] [--nofiles] [--nodeps] [--noscript] [--allfiles] [--allmatches]
+             [--badreloc] [-e|--erase=<패키지>+] [--excludedocs] [--excludepath=<경로>] [--force] [-F|--freshen=<패키지파일>+] [-h|--hash]
+             [--ignorearch] [--ignoreos] [--ignoresize] [--noverify] [-i|--install] [--justdb] [--nodeps] [--nofiledigest]
+             [--nocontexts] [--nocaps] [--noorder] [--noscripts] [--notriggers] [--oldpackage] [--percent] [--prefix=<디렉토리>]
+             [--relocate=<이전경로>=<새로운경로>] [--replacefiles] [--replacepkgs] [--test] [-U|--upgrade=<패키지파일>+] [--reinstall=<패키지파일>+]
+             [-D|--define='MACRO EXPR'] [--undefine=MACRO] [-E|--eval='EXPR'] [--target=CPU-VENDOR-OS] [--macros=<FILE:...>] [--noplugins]
+             [--nodigest] [--nosignature] [--rcfile=<FILE:...>] [-r|--root=ROOT] [--dbpath=DIRECTORY] [--querytags] [--showrc] [--quiet]
+             [-v|--verbose] [--version] [-?|--help] [--usage] [--scripts] [--setperms] [--setugids] [--setcaps] [--restore]
+             [--conflicts] [--obsoletes] [--provides] [--requires] [--recommends] [--suggests] [--supplements] [--enhances] [--info]
+             [--changelog] [--changes] [--xml] [--triggers] [--filetriggers] [--last] [--dupes] [--filesbypkg] [--fileclass]
+             [--filecolor] [--fileprovide] [--filerequire] [--filecaps]
+     ```
+
+     
+
+ 2.  Postgresql 11 설치
+    `sudo yum install -y postgresql11-server postgresql11-contrib`
+    
+    ```bash
+    $ sudo yum install -y postgresql11-server postgresql11-contrib
+    마지막 메타 데이터 만료 확인 :0:11:51. 2021년 11월 14일 (일) 오후 09시 27분 23초 이전에 확인
+    일치하는 인수가 없습니다: postgresql11-server
+    일치하는 인수가 없습니다: postgresql11-contrib
+    오류: 일치하는 항목을 찾을 수 없습니다: postgresql11-server postgresql11-contrib
+    ```
+
