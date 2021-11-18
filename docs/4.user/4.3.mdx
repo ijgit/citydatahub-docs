@@ -4,4 +4,196 @@ title: "4.3. Oauth 2.0 인증/인가"
 ---
 
 
-# 4.3. Oauth 2.0 인증/인가
+# 4.3. OAuth 2.0을 이용한 데이터허브 인증/인가
+
+**데이터허브로 로그인**은 REST API로 제공되며 OAuth 2.0기반으로 구현되있습니다. 사용자는 데이터허브로 로그인을 통해 접근토큰을 발급받고, 접근토큰을 이용하여  데이터허브 내부 모듈들의 API를 이용할 수 있습니다. 해당 페이지는 인증/인가 모듈에서 접근토큰을 발급받는 예시를 통하여 REST API의 사용법을 소개합니다.
+
+:::info
+[OAuth 2.0](https://datatracker.ietf.org/doc/html/rfc6749)은 공개 API(Open API)로 제공되는 표준 인증 방법입니다.
+:::
+
+<br/>
+
+
+
+데이터허브 로그인이 진행되는 과정을 간략히 표현하면 다음과 같습니다.
+
+
+<div style={{textAlign: 'center'}}>
+<img src={require('./4.3_image/1.Oauth2.0.png').default}/>
+</div>
+
+<br/>
+
+
+1. 사용자는 내부 모듈(혹은 외부 어플리케이션)에 로그인 요청을 합니다.
+
+2. 내부 모듈(혹은 외부 어플리케이션)은 인증/인가 모듈에 데이터허브 로그인 화면을 요청합니다.
+
+3. 내부 모듈은 데이터허브 로그인 화면으로 사용자를 리다이렉션시키고 사용자는 로그인 요청을 합니다.
+
+4. 인증/인가 모듈은 로그인 정보가 일치할 시 내부 모듈(혹은 외부 어플리케이션)의 Redirect_URI로 인증 코드를 발급합니다.
+
+5. 내부 모듈(혹은 외부 어플리케이션)은 발급받은 인증 코드를 이용하여 접근 토큰 발급을 요청합니다.
+
+6. 인증/인가 모듈이 접근토큰을 발급해주고 내부 모듈에서는 접근 토큰을 이용하여 다른 내부 모듈에 API를 요청이 가능합니다.
+
+
+<br/>
+
+
+## 4.3.1 인증 코드 요청
+
+해당 장에서는 인증/인가 모듈에 **Authorization Code**(인증 코드)를 요청하는 방법을 Node js 프로그램을 통한 예시로 설명합니다.
+
+OAuth 2.0의 **Authorization Code** 방식의 경우 인증 코드 획득 후 **Access Token**(접근 토큰)을 요청합니다.
+
+인증 코드는 1회 사용가능하며, 이미 접근 토큰을 발급하는데 이용된 인증 코드는 재사용이 불가능합니다.
+
+인증 코드는 사용자가 인증되었다는 임시 증서, 접근 토큰은 임시 증서의 진위를 확인하고 발행하는 권한 위임장이라고 이해하시면 됩니다.
+
+인증/인가 모듈이 "http://localhost:30000"에서 구동 중이라는 가정 하에 다음과 같이 GET Method를 이용하여 API를 콜합니다.
+
+|  요청 변수명  | 데이터 타입 | 필수 여부 | 기본값 |                    설명                    |
+| :-----------: | :---------: | :-------: | :----: | :----------------------------------------: |
+| response_type |   string    |     Y     |  code  |            인가 방식의 구분 값             |
+|   client_id   |   string    |     Y     |   -    |    어플리케이션 등록 시 발급받은 APP ID    |
+| redirect_uri  |   string    |     Y     |   -    | 어플리케이션 등록 시 입력한 Redirect_URI값 |
+|     state     |   string    |     Y     |   -    |            CSRF 방지를 위한 값             |
+
+```javascript
+app.get('/auth',function(req,res,next){ //Node js 프로그램의 get
+  var res_type = 'code'; //Authorization Code 방식일 경우 code를 입력;
+  var redirect_uri = 'http://localhost:30003/getaccesstoken'; //어플리케이션 등록 시 입력한 Redirect_URI 입력;
+  var cid= 'qK76kAnYTsbvQvWvoWu4';//어플리케이션 등록시 발급받은 APP ID 입력;
+  var state = 'CA978112CA1BBDCAFAC231B39A23DC4DA786EFF8147C4E72B9807785AFEE48BB'
+  var url = 'http://localhost:30000/oauth2.0/authorize?response_type='+res_type+'&redirect_uri='+redirect_uri+'&client_id='+cid+'&state='+state;
+  res.redirect(url);
+});
+```
+
+Node js 프로그램 상에서 GET API 요청 예시입니다. localhost:30003에서 프로그램 구동 중이라는 가정 하에 작성이 되었습니다.
+
+:::tip
+State 파라미터는 어플리케이션 측에서 CSRF 방지를 위한 파라미터입니다. 64byte의 문자열을 설정하면 됩니다. 해당 값의 설정 방법은 사용자와의 세션 아이디를 시드값으로 하여 SHA-256을 적용한 결과로 하는 것을 추천합니다.
+:::
+
+<br/>
+
+State 파라미터의 역활은 다음과 같습니다.
+
+1. 인증/인가 모듈의 응답에 포함된 State값이 자신의 요청 State값과 동일한지 확인
+2. 동일하면 해당 접근 토큰 요청 **(응답에 포함된 Authorization Code 사용)**
+3. 동일하지 않다면 해당 응답을 무시한다. **(Authorization Code 파기)**
+
+
+
+해당 프로그램을 실행하고 http://localhost:30003/auth 로 접속을 하여 해당 라우터에 접속하면 
+
+`http://localhost:30000/oauth2.0/authorize?response_type=code&redirect_uri=http://localhost:30003/getaccesstoken&client_id=qK76kAnYTsbvQvWvoWu4&state=CA978112CA1BBDCAFAC231B39A23DC4DA786EFF8147C4E72B9807785AFEE48BB`
+
+해당 url로 리다이렉트 하고 인증/인가 모듈에서는 APP ID, Redirect_URI를 확인하고 데이터허브 로그인 화면으로 리다이렉트 시킵니다.
+
+
+<div style={{textAlign: 'center'}}>
+<img src={require('./4.3_image/2.Login.png').default} width="400"/>
+</div>
+
+
+<br/>
+
+사용자가 데이터허브에 로그인을 할 경우 다음과 같이 접근 요청 허용 화면이 나오게 되고 **허용**버튼을 클릭할 경우 인증 코드가 발급되며 설정한 Redirect_uri로 콜백합니다.
+
+<div style={{textAlign: 'center'}}>
+<img src={require('./4.3_image/3.Authorization.png').default} width="400"/>
+</div>
+
+<br/>
+
+## 4.3.2. 접근 토큰 요청
+
+해당 장에서는 발급받은 인증 코드를 이용하여 접근 토큰을 요청하는 방법을 설명합니다.
+
+접근 토큰을 요청할 경우 사용된 인증 코드는 파기됩니다.
+
+인증 코드와 마찬가지로 인증/인가 모듈이 "http://localhost:30000" 에서 구동 중이라고 가정하겠습니다.
+
+접근 토큰 요청의 경우 REST API의 POST 방식을 이용하여 요청합니다.
+
+|  요청 변수명  | 데이터 타입 | 필수 여부 |       기본값       |                    설명                     |
+| :-----------: | :---------: | :-------: | :----------------: | :-----------------------------------------: |
+|  grant_type   |   string    |     Y     | authorization_code |                   구분 값                   |
+|   client_id   |   string    |     Y     |         -          |    어플리케이션 등록 시 발급받은 APP ID     |
+| client_secret |   string    |     Y     |         -          |  어플리케이션 등록 시 발급받은 APP SECRET   |
+| redirect_uri  |   string    |     Y     |         -          | 어플리케이션 등록 시 입력한 Redirect_URI 값 |
+|     code      |   string    |     Y     |         -          |            발급받은 인증 코드 값            |
+
+<br/>
+
+테스트용 Node js 프로그램의 경우 Redirect_uri로 콜백할 경우 발급받은 인증 코드를 이용하여 인증/인가 모듈에 POST 요청을 하도록 코드가 작성되어 있습니다.
+
+```javascript
+app.get('/getaccesstoken',function(req,res,next){
+  console.log('test start');
+  console.log('---------------------------------------------------' );
+  console.log('authoirzation code : ' + req.query.code);
+  console.log('---------------------------------------------------' );
+  var granttype = 'authorization_code'; //Authorization Code 방식일 경우 authorization_code를 입력;
+  var auth_code = req.query.code; //발급받은 Authorization Code;
+  var redirecturi = 'http://localhost:30003/getaccesstoken'; //어플리케이션 등록 시 입력한 Redirect_uri랑 같아야함;
+  var cid = 'qK76kAnYTsbvQvWvoWu4';//클라이언트 등록시 할당된 클라이언트 아이디 입력;
+  var csec = 'KsFWx4H2tLXKDqwVSjCw0NYJdnF3tn7l';//어플리케이션 등록시 할당된 APP SECRET 입력; 
+  
+  const options = {
+    uri:'http://localhost:30000/oauth2.0/token', //token 발급 api를 이용;
+    method: 'POST', // token 발급시에는 POST방식 사용;
+    form: {
+      grant_type : granttype,
+     
+      code : auth_code,
+      redirect_uri : redirecturi,
+      client_id : cid,
+      client_secret : csec
+      
+    }
+  }
+
+  request.post(options, function(err,httpResponse,body){ //Node js에서 POST 요청을 하는 코드입니다.
+    console.log('---------------------------------------------------');
+    console.log(body); 
+    console.log('---------------------------------------------------');
+    var jbody = JSON.parse(body);
+    var cookie_jwt = jbody.access_token;
+    res.render('index');
+  });
+});
+```
+<br/>
+
+토큰이 정상 발급되면 터미널 창에 다음과 같이 발급된 인증 코드, 접근 토큰의 정보를 출력하게 됩니다.
+
+```json
+test start
+---------------------------------------------------
+authoirzation code : CQAUMbPtY2BkT7mq9TgaVylEZcQIFl8f
+---------------------------------------------------
+---------------------------------------------------
+{"access_token":"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoidXNlclN5c3RlbSIsInVzZXJJZCI6IndoNzdyNzciLCJuaWNrbmFtZSI6Imh5dW5qaW4iLCJlbWFpbCI6IndoNzdyNzdAbmF2ZXIuY29tIiwicm9sZSI6Ik1hcmtldHBsYWNlX1VzZXIiLCJpYXQiOjE2MzcxNDQwNzgsImV4cCI6MTYzNzE0NzY3OCwiYXVkIjoicUs3NmtBbllUc2J2UXZXdm9XdTQiLCJpc3MiOiJ1cm46ZGF0YWh1YjpjaXR5aHViOnNlY3VyaXR5In0.kKWK8lq9upCXABcterOsW9kS9XlgumcJdczLyrrxzy62wuNWIThus4BC1U4CSx553Oik6m7yE29ywD18s_NOOCoGa0inisgSGh4mX6t7lDONrwRoECXdCz5ONb1f3flMRYbp94bkmw3GP3twnpufRFKGZEfrmG9_q054ihG2cV24qwixQ25zT9UpRkIkPRHezb0f6zKRGAJ9y2yVLuGfnmnXL3Ksenw55a77SVS2tZB4dWAM8YyjbKxmhKRM5I9hdDZpHCnVyHvJV6lRlMaN8bfY9fAojJf21ln1-kseqXKAao_XHcJz8p4BX79DiDnfpuDGp7YB73N9jo_i_aQwfg",
+"refresh_token":"ZZ3BZukU4SfaYTLKwg2gIeGkcZedJY0o7RAkgr4s4Wvr0IzzE4dNc5rnddTCpHiYTQ57iIvL3v6RS0BYwHjWnHpYoFi8bHkx0JiLbaL8RiqLNLtYV1BAkiUzzXhBvJQs",
+ "expires_in":1637147678,
+ "refresh_expires_in":1638872078,
+ "token_type":"Bearer"}
+---------------------------------------------------
+```
+
+<br/>
+
+접근 토큰 API의 요청 결과는 다음과 같은 형태입니다.
+
+| Name               |    Type     | Description                |
+| ------------------ | :---------: | -------------------------- |
+| access_token       |   String    | 사용자의 접근 토큰 값      |
+| refresh_token      |   String    | 사용자의 리프레시 토큰 값  |
+| expires_in         | NumericDate | 해당 접근 토큰의 만료 시간 |
+| refresh_expires_in | NumericDate | 리프레시 토큰의 만료 시간  |
+| token_type         |   String    | "Bearer" 고정값            |
