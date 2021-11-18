@@ -7,7 +7,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'City Data-Hub',
-  tagline: 'document',
+  tagline: '',
   url: 'https://docs.citydatahub.kr',
   baseUrl: '/',
   onBrokenLinks: 'throw',
@@ -24,7 +24,7 @@ const config = {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
-          editUrl: 'https://github.com/facebook/docusaurus/edit/main/website/',
+          // editUrl: 'https://github.com/facebook/docusaurus/edit/main/website/',
         },
         blog: {
           showReadingTime: true,
@@ -64,7 +64,9 @@ const config = {
         ],
       },
       footer: {
-        style: 'dark',
+        style: 'light',
+
+
         links: [
           // {
           //   title: 'Docs',
