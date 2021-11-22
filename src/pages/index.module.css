@@ -4,7 +4,7 @@
  */
 
 .heroBanner {
-  padding: 10rem 0;
+  padding: 10vh 0;
   text-align: left;
   position: relative;
   overflow: hidden;
@@ -12,7 +12,9 @@
 }
 
 .heroBannerContainer{
-  min-height: 15vh;
+  min-height: 20vh;
+  width: 80vw;
+  max-width: 1100px;
 
   display: flex;
   flex-direction: column;
@@ -23,13 +25,30 @@
 .heroBannerTitle{
   display: flex;
   color: #e34d47;
+  font-size: 50px;
+  font-weight: 700;
 }
 
 .heroBannerText{
   display: flex;
+  font-family: Open Sans,Arial,sans-serif;
+  font-weight: 500;
+  font-size: 24px;
 }
 
 
+.homeContainer{
+  display: flex;
+  align-content: center;
+  margin-top: 5rem;
+}
+
+.homeContents{
+  margin: auto;
+  display: flex;
+  width: 80vw;
+  max-width: 1100px;
+}
 
 
 

@@ -19,13 +19,13 @@ function HomepageHeader() {
           <p>지속 가능한 도시성장과 삶의 질 향상을 위한 데이터 기반의 스마트 시티를 실현하는 개방형 데이터 허브 아키텍처 및 핵심 기술</p>
         </div>
 
-        {/* <div className={styles.buttons}>
+        <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
             to="/docs/intro">
-            Docusaurus Tutorial - 5min ⏱️
+            Learn about CityDataHub ⏱️
           </Link> 
-        </div>*/}
+        </div>
       </div>
     </header>
   );
@@ -47,6 +47,18 @@ function HomepageHeaderTitle(){
   )
 }
 
+function HomepageContents(){
+  return(
+    <div className={clsx('homeContainer', styles.homeContainer )}>
+
+      <div className={clsx('homeContents', styles.homeContents)}>
+        <h2>overview </h2>
+
+      </div>
+    </div>
+  )
+}
+
 
 
 export default function Home() {
@@ -55,9 +67,10 @@ export default function Home() {
     <Layout>
 
       <HomepageHeader />
-      {/* <main>
-        <HomepageFeatures />
-      </main> */}
+      <main>
+        <HomepageContents/>
+        {/* <HomepageFeatures /> */}
+      </main>
     </Layout>
   );
 }
