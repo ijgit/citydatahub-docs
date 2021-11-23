@@ -1,0 +1,57 @@
+---
+sidebar_position: 1
+title: "3.1. 일반 사용자 계정 생성"
+---
+
+
+# 3.1. 일반 사용자 계정 생성
+
+
+# 3.1 모듈 관리자 계정 생성
+
+인증/인가 모듈의 **System_Admin** 계정의 역활은 인증/인가 모듈의 어플리케이션, 사용자에 대한 전체 관리입니다. 
+
+모듈 별 관리자 권한을 가지는 계정은 오직 **System_Admin 권한**을 가진 계정만이 생성 가능합니다.
+
+모듈 별 관리자 계정이 등록한 어플리케이션(이하 모듈)은 **신뢰할 수 있는 어플리케이션**이기 때문에 사용자에게 별다른 정보 권한 허용을 요청하지 않습니다.  
+
+
+<div style={{textAlign: 'center'}}>
+<img src={require('./3.1_image/1.Authorization.png').default} width="400"/>
+</div>
+
+
+
+
+모듈의 관리자가 아닌 일반 사용자가 만든 외부 어플리케이션에 대한 OAuth 요청은 다음과 같이 접근 권한을 확인받습니다.
+
+즉, 모듈의 관리자 권한은 **System_Admin**이 판단하기에 신뢰할 수 있는 자이고 해당 권한이 남용되어서는 안 되며, 이에 **System_Admin**만이 모듈의 관리자 권한을 부여할 수 있게끔 되어있습니다.
+
+
+
+1. admin 아이디로 로그인 합니다. (**System_Admin** 권한의 관리자 계정)
+
+2. 메인 페이지에서 **"관리자 계정 관리"** 버튼을 클릭합니다.
+
+    <div style={{textAlign: 'center'}}>
+    <img src={require('./3.1_image/2.Administrator_account.png').default} width="400"/>
+    </div>
+
+
+3. 좌측 하단의 **"관리자 계정 추가"** 버튼을 클릭합니다.
+
+    <div style={{textAlign: 'center'}}>
+    <img src={require('./3.1_image/3.Add_Admin.png').default}/>
+    </div>
+
+
+4. 콤보박스에서 부여하고 싶은 권한을 선택합니다.
+
+    <div style={{textAlign: 'center'}}>
+    <img src={require('./3.1_image/4.Add_Admin_display.png').default} width="400"/>
+    </div>
+
+   
+
+5. 필수 정보들을 입력하고 **"확인"**버튼을 클릭합니다.
+
