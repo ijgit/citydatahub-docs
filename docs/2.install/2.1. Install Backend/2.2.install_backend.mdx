@@ -104,21 +104,56 @@ Success! 메시지가 출력되면 정상적으로 테이블이 생성 및 관�
 관리자의 기본 정보는 아래와 같습니다.
 - **ID** : admin<br/>
 - **Password** : admin45@<br/>
+
+비밀번호를 변경하고 싶으신 경우 인증/인가 모듈 프론트엔드를 설치하신 뒤 진행하시면 됩니다.    
 :::
 
 
 ## 4. 인증/인가 모듈 실행
 
 모든 설정이 끝났으면 인증/인가 모듈이 실행 가능합니다.
-node_modules를 설치하고 실행합니다.
+`pm2` 를 이용하여 인증/인가 모듈을 실행합니다.
+
+`pm2`를 설치하기 전에 우선 `npm i` 명령어를 통해 node.js module들을 설치합니다.
 
 ```bash
-
 [centos@localhost smartcity_back]$ npm i
-
-[centos@localhost smartcity_back]$ npm start
-...
-exchange code 
-Database connected..
 ```
 
+
+### PM2 설치
+
+pm2를 사용할 경우 인증/인가 모듈을 더욱 효과적으로 관리 할 수 있습니다.
+
+인증/인가 모듈을 pm2를 이용하여 node js 프로세스를 관리할 경우 인증/인가 모듈 서버에 이상이 생겼다가 복구될 경우 자동으로 실행시켜주며
+cluster라는 기능을 이용하여 16개의 프로세스를 동시에 지원가능하게 만들어줍니다.
+
+1. 전역적으로 pm 설치
+
+   ```bash
+   [centos@localhost smartcity_back]$ sudo npm install pm2 -g
+   ```
+
+2. pm2 를 이용하여 인증/인가 모듈을 실행
+   - 실행 전, 먼저 관리자 계정으로 전환합니다.
+      ```bash
+      [centos@localhost smartcity_back]$ sudo su - root
+      [root@localhost ~]#
+      ```
+
+   - `smartcity_back` 디렉토리로 이동합니다.
+      ```bash
+      [root@localhost ~]# cd /home/centos/wokspace/citydatahub_security-master/smartcity_back/
+      ```
+
+   - 다음 명령어를 실행하여, 인증/인가 모듈을 실행합니다.
+      ```bash
+      [root@localhost smartcity_back]# pm2 start ./bin/www
+      [PM2] Starting /home/centos/wokspace/citydatahub_security-master/smartcity_back/bin/www in fork_mode (1 instance)
+      [PM2] Done.
+      ┌────┬────────────────────┬──────────┬──────┬───────────┬──────────┬──────────┐
+      │ id │ name               │ mode     │ ↺    │ status    │ cpu      │ memory   │
+      ├────┼────────────────────┼──────────┼──────┼───────────┼──────────┼──────────┤
+      │ 0  │ www                │ fork     │ 0    │ online    │ 0%       │ 35.3mb   │
+      └────┴────────────────────┴──────────┴──────┴───────────┴──────────┴──────────┘
+      ```
