@@ -1,0 +1,124 @@
+---
+sidebar_position: 1
+title: "2.1.1. PostgreSQL 과  인증/인가 모듈 서버 설정"
+---
+
+
+## 1. PostgreSQL 사용자와 DB 생성
+
+인증/인가 모듈에서 사용할 계정과 데이터베이스를 생성합니다.
+
+1. Database 접속 
+   ```bash
+   [centos@localhost smartcity_back]$ psql -U postgres
+   psql (11.14)
+
+   postgres=#
+   ```
+
+2. 인증/인가 모듈에서 사용할 데이터베이스 생성
+   ```bash
+   # CREATE DATABASE DB_NAME ENCODING 'utf-8';
+   postgres=# CREATE DATABASE test ENCODING 'utf-8';
+   CREATE DATABASE
+   ```
+
+
+3. 인증/인가 모듈 데이터베이스를 사용할 사용자 생성
+
+   ```bash
+   # CREATE USER USER_NAME PASSWORD 'USER_PASSWORD';
+   postgres=# create user test password 'qwer1234';
+   CREATE ROLE
+   ```
+
+4. 데이터 베이스의 소유권과 권한을 사용자에게 위임
+   ```bash
+   # 소유권 위임
+   # ALTER DATABASE DB_NAME OWNER TO USER_NAME;
+   postgres=# alter database security owner to test;
+   ALTER DATABASE
+
+   # 권한 위임
+   # GRANT ALL ON DATABASE DB_NAME TO USER_NAME WITH GRANT OPTION;
+   postgres=# grant all on database security to test with grant option;
+   GRANT
+   ```
+
+
+5. 종료 후, 생성한 관리자와 데이터 베이스 정보로 접속 확인
+
+   ```bash
+   [centos@localhost]$ psql -U test -d security
+   test 사용자의 암호: 
+   psql (11.14)
+   도움말을 보려면 "help"를 입력하십시오.
+
+   security=> exit;
+
+   [centos@localhost]$
+   ```
+
+## 2. 인증/인가 모듈 서버 설정
+
+`/server_conf.json` 에서 서버 운영에 필요한 정보를 설정합니다.
+
+```json
+{
+ "serverip" : "Standalone IP",
+ "serverport" : "Standalone PORT",
+ "dbUserId" : "enter your DB ID",
+ "dbUserPwd" : "enter your DB PASSWORD",
+ "dbHost" : "IP of Database",
+ "dbName" : "NAME of Database",
+ "dbPort" : "PORT of Database",
+ "emalAccountID" : "enter your email ID",
+ "emailAccountPwd" : "enter your email PASSWORD"
+}
+```
+
+1. **serverip** : 인증/인가 모듈을 구동하는 서버의 IP를 입력
+2. **serverport** : 인증/인가 모듈을 구동할 포트를 입력
+3. **dbUserId** : postgresql 사용자의 이름을 입력
+4. **dbUserPwd** : postgresql 사용자의 비밀번호를 입력
+5. **dbHost** : postgresql 서버의 주소를 입력 (로컬에 설치했을 경우 127.0.0.1)
+6. **dbName** : postgresql 데이터베이스 이름을 입력
+7. **dbPort** : postgresql의 port를 입력 (기본 5432)
+8. **emailAccountId** : 이메일 인증을 제공해줄 아이디 입력(지메일 권장, 해당 계정은 인증메일의 발신자가 됨)
+9. **emailAccountPwd** : 이메일 인증을 제공해줄 아이디의 비밀번호 입력
+
+
+## 3. 인증/인가 모듈 DB Table 생성
+
+**인증/인가 모듈에 사용할 데이터베이스에 관련 테이블을 생성하고 관리자의 계정을 생성합니다.**<br/>
+소스파일의 **/initDB/createTable.js**  를 실행합니다.<br/>
+
+```bash
+[centos@localhost smartcity_back]$ node ./initDB/createTable.js 
+Database connected..
+Success!
+```
+
+:::note
+Success! 메시지가 출력되면 정상적으로 테이블이 생성 및 관리자 계정이 생성된 것입니다.<br/>
+관리자의 기본 정보는 아래와 같습니다.
+- **ID** : admin<br/>
+- **Password** : admin45@<br/>
+:::
+
+
+## 4. 인증/인가 모듈 실행
+
+모든 설정이 끝났으면 인증/인가 모듈이 실행 가능합니다.
+node_modules를 설치하고 실행합니다.
+
+```bash
+
+[centos@localhost smartcity_back]$ npm i
+
+[centos@localhost smartcity_back]$ npm start
+...
+exchange code 
+Database connected..
+```
+

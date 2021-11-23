@@ -1,0 +1,292 @@
+---
+sidebar_position: 1
+title: "2.1.1. System Setting"
+---
+
+:::caution
+인증/인가 모듈의 Backend 입니다. 실질적인 인증/인가를 담당하며 <br/>
+Node 버전 12, npm v6 이상을 권장합니다.
+:::
+
+## 1. Install Node.js and PostgreSQL 11
+
+### 1.1. Install Node.js and Postgresql11 | CentOS 7
+
+#### Node.js 설치
+
+1. 저장소 업데이트
+
+   ```bash
+   sudo yum update
+   ```
+
+2. 패키지 업데이트
+
+   ```bash
+   sudo yum upgrade
+   ```
+
+3. 저장소 추가
+
+   ```bash
+   curl -sL https://rpm.nodesource.com/setup_12.x | sudo bash -
+   ```
+
+4. node.js 설치
+
+   ```bash
+   sudo yum install -y nodejs
+   ```
+
+
+#### Postgresql11 설치
+
+1. postgresql 설치 확인, 삭제
+
+   ```bash
+   # centos에서 postgresql이 설치되어 있는지 확인
+   $ rpm -qa | grep postgres
+   
+   
+   # 설치된 것이 있다면 삭제
+   $ sudo yum remove postgresql
+   ```
+
+2. 저장소 추가
+
+   ```bash
+   $ centos_version=7 # your centos version
+   
+   $ rpm -Uvh https://download.postgresql.org/pub/repos/yum/reporpms/EL-${centos_version}-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+   ```
+
+3. postgresql 11 설치
+
+   ```bash
+   $ sudo yum install postgresql11-server postgresql11-contrib
+   ```
+   - postgresql11-server: 데이터베이스 서버
+   - postgresql11-contrib: 추가적으로 지원되는 모듈 
+
+4. 기본 database  생성
+
+   ```bash
+   $ sudo /usr/pgsql-11/bin/postgresql-11-setup initdb
+   ```
+   
+5. 서비스 실행 및 상태 확인
+
+   ```bash
+   # 서비스 실행
+   $ sudo systemctl start --now postgresql-11
+
+   # 서비스 등록
+   $ sudo systemctl enable --now postgresql-11
+
+   # 서비스 상태 확인
+   $ sudo systemctl status postgresql-11
+   ● postgresql-11.service - PostgreSQL 11 database server
+      Loaded: loaded (/usr/lib/systemd/system/postgresql-11.service; enabled; vendor p>
+      Active: active (running) since Tue 2021-11-09 02:35:20 EST; 29s ago
+      Docs: https://www.postgresql.org/docs/11/static/
+   ```
+
+### 1.2. Install Node.js and Postgresql11 | CentOS 8
+
+
+#### Node.js 설치
+
+1. 저장소 업데이트
+
+   ```bash
+   [centos@localhost ~]$ sudo dnf update
+   ```
+
+2. 패키지 업데이트
+
+   ```bash
+   [centos@localhost ~]$ sudo dnf upgrade
+   ```
+
+3. 저장소 추가
+
+   ```bash
+   [centos@localhost ~]$ curl -sL https://rpm.nodesource.com/setup_12.x | sudo bash -
+   ```
+
+4. node.js 설치
+
+   ```bash
+   [centos@localhost ~]$ sudo dnf install -y nodejs
+   ```
+
+#### Postgresql11 설치
+
+1. postgresql 설치 확인, 삭제
+
+   ```bash
+   # centos에서 postgresql이 설치되어 있는지 확인
+   [centos@localhost ~]$ rpm -qa | grep postgres
+   
+   
+   # 설치된 것이 있다면 삭제
+   [centos@localhost ~]$ sudo dnf remove postgresql
+   ```
+
+
+2. 저장소 추가
+
+   ```bash
+   [centos@localhost ~]$ centos_version=8 # your centos version
+   
+   [centos@localhost ~]$ rpm -Uvh https://download.postgresql.org/pub/repos/yum/reporpms/EL-${centos_version}-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+   ```
+
+3. 모듈 비활성화
+
+   ```bash
+   $ sudo dnf module disable postgresql
+   ```
+
+4. cache 정리
+
+   ```bash
+   [centos@localhost ~]$ sudo dnf clean all
+   ```
+
+5. postgresql 11 설치
+
+   ```bash
+   [centos@localhost ~]$ sudo dnf install postgresql11-server postgresql11-contrib
+   ```
+
+   - postgresql11-server: 데이터베이스 서버
+   - postgresql11-contrib: 추가적으로 지원되는 모듈 
+
+6. 기본 database 생성
+
+   ```bash
+   [centos@localhost ~]$ sudo /usr/pgsql-11/bin/postgresql-11-setup initdb
+   ```
+
+7. 서비스 실행 및 상태 확인
+
+   ```bash
+   # 서비스 실행
+   [centos@localhost ~]$ sudo systemctl start --now postgresql-11
+
+   # 서비스 등록
+   [centos@localhost ~]$ sudo systemctl enable --now postgresql-11
+
+   # 서비스 상태 확인
+   [centos@localhost ~]$ sudo systemctl status postgresql-11
+   ● postgresql-11.service - PostgreSQL 11 database server
+      Loaded: loaded (/usr/lib/systemd/system/postgresql-11.service; enabled; vendor p>
+      Active: active (running) since Tue 2021-11-09 02:35:20 EST; 29s ago
+      Docs: https://www.postgresql.org/docs/11/static/
+   ```
+
+
+## 2. PostgreSQL 계정 설정
+
+
+1. 클라이언트 인증 설정 변경
+
+   - postgres 의 인증 관련 설정 파일을 열어줍니다.
+      ```bash
+      [centos@localhost ~]$ sudo vi /var/lib/pgsql/11/data/pg_hba.conf
+      ```
+
+   - METHOD 를 아래와 같이 수정하여 계정의 패스워드에 대한 서버로의 전송을 어떻게 할 것인지 설정합니다. 
+      ```bash
+      # TYPE  DATABASE        USER            ADDRESS                 METHOD
+
+      # "local" is for Unix domain socket connections only
+      local   all             all                                     trust
+      # IPv4 local connections:
+      host    all             all             127.0.0.1/32            trust
+      # IPv6 local connections:
+      host    all             all             ::1/128                 trust
+      # Allow replication connections from localhost, by a user with the
+      # replication privilege.
+      local   replication     all                                     peer
+      host    replication     all             127.0.0.1/32            ident
+      host    replication     all             ::1/128                 ident
+      ```
+
+      - trust: password 없이 접근 가능
+      - reject: 거부
+      - md5: password 를 md5로 암호화해서 전송
+      - crypt: crypt로 암호화해서 전송 (postgres 7.2 부터는 사용하지 않으며, 이전 버전 설정과 호환되기 위함)
+      - password: text 로 password를 선송하는 것
+      - krb4, krb5: KerberOS V4, 5를 지원
+      - ident: 접속 ClientOS User의 이름을 확인하는 방법
+      - pam: PAM (Pluggable Authentication Modules) 서비스를 사용한 인증
+
+   -  postgresql 재시작
+
+      ```bash
+      [centos@localhost ~]$ sudo systemctl restart --now postgresql-11
+      ```
+
+4. postgresql 접속
+   사용자를 변경한 뒤, database에 접속합니다.
+
+   ```bash
+   [centos@localhost ~]$ sudo su - postgres
+
+   [postgres@localhost ~]$ psql
+
+   postgres=# 
+   ```
+
+
+5. postgres 계정의 비밀번호를 변경
+
+   ```bash
+   postgres=# alter user postgres with password 'qwer1234';
+   ALTER ROLE
+   
+   postgres=# exit;
+   ```
+
+7. 기본 사용자로 변경
+
+   ```bash
+   [postgres@localhost ~]$ su - centos
+   ```
+
+
+8. 인증방식 변경
+
+   클라이언트 인증 설정을 변경 
+
+   - 변경파일 열기
+      ```bash
+      [centos@localhost ~]$ sudo vi /var/lib/pgsql/11/data/pg_hba.conf
+      ```
+
+   - `pg_hba.conf` 파일을 아래와 같이 수정
+
+      위에서 trust 로 바꾸었던 부분을 md5로 변경해줍니다.
+
+         ```bash
+         # TYPE  DATABASE        USER            ADDRESS                 METHOD
+
+         # "local" is for Unix domain socket connections only
+         local   all             all                                     md5
+         # IPv4 local connections:
+         host    all             all             127.0.0.1/32            md5
+         # IPv6 local connections:
+         host    all             all             ::1/128                 md5
+         # Allow replication connections from localhost, by a user with the
+         # replication privilege.
+         local   replication     all                                     peer
+         host    replication     all             127.0.0.1/32            ident
+         host    replication     all             ::1/128                 ident
+         ```
+
+   - postgresql 을 재시작
+      ```bash
+      [centos@localhost ~]$ sudo systemctl service restart postgresql-11
+      ```
