@@ -52,7 +52,7 @@ function HomepageContents(){
     <div className={clsx('homeContainer', styles.homeContainer )}>
 
       <div className={clsx('homeContents', styles.homeContents)}>
-        <h2>overview </h2>
+        {/* <h2>overview </h2> */}
 
       </div>
     </div>
