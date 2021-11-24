@@ -25,17 +25,23 @@ Node 버전 12, npm v6 이상을 권장합니다.
    [centos@localhost ~]$ sudo yum update
    ```
 
+   <br/>
+
    2. 패키지 업데이트 
    
    ```bash
    [centos@localhost ~]$ sudo yum upgrade
    ```
 
+   <br/>
+
    3. 저장소 추가
 
    ```bash
    [centos@localhost ~]$ curl -sL https://rpm.nodesource.com/setup_12.x | sudo bash -
    ```
+
+   <br/>
 
    4. node.js 설치
 
@@ -54,17 +60,23 @@ Node 버전 12, npm v6 이상을 권장합니다.
    [centos@localhost ~]$ sudo dnf update
    ```
 
+   <br/>
+
    2. 패키지 업데이트
 
    ```bash
    [centos@localhost ~]$ sudo dnf upgrade
    ```
 
+   <br/>
+
    3. 저장소 추가
 
    ```bash
    [centos@localhost ~]$ curl -sL https://rpm.nodesource.com/setup_12.x | sudo bash -
    ```
+
+   <br/>
 
    4. node.js 설치
 
@@ -94,6 +106,7 @@ Node 버전 12, npm v6 이상을 권장합니다.
    [centos@localhost ~]$ sudo yum remove postgresql
    ```
 
+   <br/>
 
    2. 저장소 추가
    
@@ -103,6 +116,7 @@ Node 버전 12, npm v6 이상을 권장합니다.
    [centos@localhost ~]$ rpm -Uvh https://download.postgresql.org/pub/repos/yum/reporpms/EL-${centos_version}-x86_64/pgdg-redhat-repo-latest.noarch.rpm
    ```
 
+   <br/>
 
    3. PostgreSQL 11 설치
 
@@ -112,12 +126,15 @@ Node 버전 12, npm v6 이상을 권장합니다.
       - postgresql11-server: 데이터베이스 서버
       - postgresql11-contrib: 추가적으로 지원되는 모듈 
 
+   <br/>
+
    4. 기본 database  생성
 
    ```bash
    [centos@localhost ~]$ sudo /usr/pgsql-11/bin/postgresql-11-setup initdb
    ```
 
+   <br/>
 
    5. 서비스 실행 및 상태 확인
 
@@ -152,6 +169,7 @@ Node 버전 12, npm v6 이상을 권장합니다.
    [centos@localhost ~]$ sudo dnf remove postgresql
    ```
 
+   <br/>
 
    2. 저장소 추가
 
@@ -167,11 +185,15 @@ Node 버전 12, npm v6 이상을 권장합니다.
    $ sudo dnf module disable postgresql
    ```
 
+   <br/>
+
    4. cache 정리
 
    ```bash
    [centos@localhost ~]$ sudo dnf clean all
    ```
+
+   <br/>
 
    5. postgresql 11 설치
 
@@ -181,11 +203,15 @@ Node 버전 12, npm v6 이상을 권장합니다.
       - postgresql11-server: 데이터베이스 서버
       - postgresql11-contrib: 추가적으로 지원되는 모듈 
 
+   <br/>
+
    6. 기본 database 생성
 
    ```bash
    [centos@localhost ~]$ sudo /usr/pgsql-11/bin/postgresql-11-setup initdb
    ```
+
+   <br/>
 
    7. 서비스 실행 및 상태 확인
 
@@ -215,7 +241,7 @@ Node 버전 12, npm v6 이상을 권장합니다.
 ## 2. PostgreSQL 계정 설정
 
 
-1. 클라이언트 인증 설정 변경
+**1. 클라이언트 인증 설정 변경**
 
    - postgres 의 인증 관련 설정 파일을 열어줍니다.
       ```bash
@@ -253,8 +279,9 @@ Node 버전 12, npm v6 이상을 권장합니다.
       ```bash
       [centos@localhost ~]$ sudo systemctl restart --now postgresql-11
       ```
+<br/>
 
-2. postgresql 접속
+**2. postgresql 접속**
    사용자를 변경한 뒤, database에 접속합니다.
 
    ```bash
@@ -265,8 +292,9 @@ Node 버전 12, npm v6 이상을 권장합니다.
    postgres=# 
    ```
 
+<br/>
 
-3. postgres 계정의 비밀번호를 변경
+**3. postgres 계정의 비밀번호를 변경**
 
    ```bash
    postgres=# alter user postgres with password 'qwer1234';
@@ -275,14 +303,17 @@ Node 버전 12, npm v6 이상을 권장합니다.
    postgres=# exit;
    ```
 
-4. 기본 사용자로 변경
+<br/>
+
+**4. 기본 사용자로 변경**
 
    ```bash
    [postgres@localhost ~]$ su - centos
    ```
 
+<br/>
 
-5. 인증방식 변경
+**5. 인증방식 변경**
 
    클라이언트 인증 설정을 변경 
 
