@@ -23,6 +23,7 @@ const config = {
       ({
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
+          routeBasePath: '/',
           // Please change this to your repo.
           // editUrl: 'https://github.com/facebook/docusaurus/edit/main/website/',
         },
@@ -66,11 +67,11 @@ const config = {
           //   position: 'right',
           // }
           // {to: '/blog', label: 'Blog', position: 'left'},
-          // {
-          //   href: 'https://github.com/facebook/docusaurus',
-          //   label: 'GitHub',
-          //   position: 'right',
-          // },
+          {
+            href: 'http://citydatahub.kr/',
+            label: 'City Data-hub',
+            position: 'right',
+          },
         ],
       },
       footer: {

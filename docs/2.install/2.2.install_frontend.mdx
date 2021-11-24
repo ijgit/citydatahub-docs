@@ -14,37 +14,34 @@ React로 구현되있으며 2.1 Backend 설치에서 node 및 Npm을 설치하�
 ## 2.2.1 Node_modules 설치
 
 설치를 진행하기 전 관리자 계정으로 변경합니다.
-
-`sudo -su root`
+```bash
+[centos@localhost smartcity_back]$ sudo su - root
+[root@localhost ~]#
+```
 
 프론트엔드의 디렉토리로 이동합니다.
-
-`cd citydatahub_security/smartcity_front`
+```bash
+[root@localhost smartcity_back]# cd ../smartcity_front/
+```
 
 npm을 이용하여 필요한 노드모듈을 설치합니다. 이 때 리액트도 자동으로 설치됩니다.
+```bash
+[root@localhost smartcity_front]# npm i
+```
 
-`npm install`
 
 프론트엔드를 원하는 포트에서 실행하기 위해 package.json의 수정이 필요합니다.
 
 package.json의 "scripts" 의 "start" 부분을 수정합니다.
 
-기존
-
-```json
-"scripts":{
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-}
+```bash
+[root@localhost smartcity_front]# vim package.json
 ```
 
 
+30001번 포트에서 구동할 경우, 아래와 같이 변경합니다.
 
-30001번 포트에서 구동할 경우
-
-```
+```json title="package.json" {2}
 "scripts":{
     "start": "export PORT=30001 && react-scripts start",
     "build": "react-scripts build",
@@ -55,12 +52,25 @@ package.json의 "scripts" 의 "start" 부분을 수정합니다.
 
 
 
+
+
 설정이 완료되었으면 2.1 Backend 설치 과정에서 설치된 pm2를 이용하여 실행합니다.
 
-`sudo -su root`
+```bash
+# root 계정이 아니라면 root 계정으로 전환합니다.
+# [centos@localhost smartcity_back]$ sudo su - root
 
-`pm2 start npm -- start`
-
+[root@localhost smartcity_front]# pm2 start npm -- start
+[PM2] Starting /usr/bin/npm in fork_mode (1 instance)
+[PM2] Done.
+┌────┬────────────────────┬──────────┬──────┬───────────┬──────────┬──────────┐
+│ id │ name               │ mode     │ ↺    │ status    │ cpu      │ memory   │
+├────┼────────────────────┼──────────┼──────┼───────────┼──────────┼──────────┤
+│ 1  │ npm                │ fork     │ 0    │ online    │ 0%       │ 12.4mb   │
+│ 0  │ www                │ fork     │ 0    │ online    │ 0%       │ 53.3mb   │
+└────┴────────────────────┴──────────┴──────┴───────────┴──────────┴──────────┘
+[root@localhost smartcity_front]#
+```
 
 
 예시의 경우 http://localhost:30001 로 접속하여 정상 구동을 확인합니다.
