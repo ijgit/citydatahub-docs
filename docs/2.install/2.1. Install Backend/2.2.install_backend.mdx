@@ -16,6 +16,8 @@ title: "2.1.1. PostgreSQL 과  인증/인가 모듈 서버 설정"
    postgres=#
    ```
 
+<br/>
+
 2. 인증/인가 모듈에서 사용할 데이터베이스 생성
    ```bash
    # CREATE DATABASE DB_NAME ENCODING 'utf-8';
@@ -23,6 +25,7 @@ title: "2.1.1. PostgreSQL 과  인증/인가 모듈 서버 설정"
    CREATE DATABASE
    ```
 
+<br/>
 
 3. 인증/인가 모듈 데이터베이스를 사용할 사용자 생성
 
@@ -31,6 +34,8 @@ title: "2.1.1. PostgreSQL 과  인증/인가 모듈 서버 설정"
    postgres=# create user test password 'qwer1234';
    CREATE ROLE
    ```
+
+<br/>
 
 4. 데이터 베이스의 소유권과 권한을 사용자에게 위임
    ```bash
@@ -45,6 +50,7 @@ title: "2.1.1. PostgreSQL 과  인증/인가 모듈 서버 설정"
    GRANT
    ```
 
+<br/>
 
 5. 종료 후, 생성한 관리자와 데이터 베이스 정보로 접속 확인
 
