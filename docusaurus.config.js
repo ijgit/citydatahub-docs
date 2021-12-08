@@ -7,7 +7,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'City Data-Hub',
-  tagline: '',
+  tagline: '지속 가능한 도시성장과 삶의 질 향상을 위한 데이터 기반의 스마트 시티를 실현하는 개방형 데이터 허브 아키텍처 및 핵심 기술',
   url: 'https://docs.citydatahub.kr',
   baseUrl: '/',
   onBrokenLinks: 'throw',
@@ -22,8 +22,9 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
+          
           sidebarPath: require.resolve('./sidebars.js'),
-          routeBasePath: '/',
+          routeBasePath: '/security',
           // Please change this to your repo.
           // editUrl: 'https://github.com/facebook/docusaurus/edit/main/website/',
         },
@@ -60,7 +61,7 @@ const config = {
             type: 'doc',
             docId: 'intro',
             position: 'left',
-            label: 'Documents',
+            label: 'Security',
           },
           // {
           //   type: 'search',
