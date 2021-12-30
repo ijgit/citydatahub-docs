@@ -1,13 +1,18 @@
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @format
+ */
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
-
-const lightCodeTheme = require('prism-react-renderer/themes/github');
-const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'My Site',
-  tagline: 'Dinosaurs are cool',
+  tagline: 'The tagline of my site',
   url: 'https://your-docusaurus-test-site.com',
   baseUrl: '/',
   onBrokenLinks: 'throw',
@@ -24,7 +29,8 @@ const config = {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
-          editUrl: 'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+          editUrl:
+            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
         },
         blog: {
           showReadingTime: true,
@@ -43,9 +49,9 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: 'My Site',
+        title: 'My Facebook Project',
         logo: {
-          alt: 'My Site Logo',
+          alt: 'My Facebook Project Logo',
           src: 'img/logo.svg',
         },
         items: [
@@ -55,7 +61,8 @@ const config = {
             position: 'left',
             label: 'Tutorial',
           },
-          {to: '/blog', label: 'Blog', position: 'left'},
+          {to: 'blog', label: 'Blog', position: 'left'},
+          // Please keep GitHub link to the right for consistency.
           {
             href: 'https://github.com/facebook/docusaurus',
             label: 'GitHub',
@@ -67,11 +74,15 @@ const config = {
         style: 'dark',
         links: [
           {
-            title: 'Docs',
+            title: 'Learn',
             items: [
               {
-                label: 'Tutorial',
-                to: '/docs/intro',
+                label: 'Style Guide',
+                to: 'docs/',
+              },
+              {
+                label: 'Second Doc',
+                to: 'docs/doc2',
               },
             ],
           },
@@ -83,12 +94,12 @@ const config = {
                 href: 'https://stackoverflow.com/questions/tagged/docusaurus',
               },
               {
-                label: 'Discord',
-                href: 'https://discordapp.com/invite/docusaurus',
-              },
-              {
                 label: 'Twitter',
                 href: 'https://twitter.com/docusaurus',
+              },
+              {
+                label: 'Discord',
+                href: 'https://discordapp.com/invite/docusaurus',
               },
             ],
           },
@@ -97,7 +108,7 @@ const config = {
             items: [
               {
                 label: 'Blog',
-                to: '/blog',
+                to: 'blog',
               },
               {
                 label: 'GitHub',
@@ -105,12 +116,36 @@ const config = {
               },
             ],
           },
+          {
+            title: 'Legal',
+            // Please do not remove the privacy and terms, it's a legal requirement.
+            items: [
+              {
+                label: 'Privacy',
+                href: 'https://opensource.facebook.com/legal/privacy/',
+              },
+              {
+                label: 'Terms',
+                href: 'https://opensource.facebook.com/legal/terms/',
+              },
+              {
+                label: 'Data Policy',
+                href: 'https://opensource.facebook.com/legal/data-policy/',
+              },
+              {
+                label: 'Cookie Policy',
+                href: 'https://opensource.facebook.com/legal/cookie-policy/',
+              },
+            ],
+          },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
-      },
-      prism: {
-        theme: lightCodeTheme,
-        darkTheme: darkCodeTheme,
+        logo: {
+          alt: 'Facebook Open Source Logo',
+          src: 'img/oss_logo.png',
+          href: 'https://opensource.facebook.com',
+        },
+        // Please do not remove the credits, help to publicize Docusaurus :)
+        copyright: `Copyright © ${new Date().getFullYear()} Facebook, Inc. Built with Docusaurus.`,
       },
     }),
 };
