@@ -24,15 +24,9 @@ const config = {
         docs: {
           
           sidebarPath: require.resolve('./sidebars.js'),
-          routeBasePath: '/security',
+          routeBasePath: '/docs',
           // Please change this to your repo.
           // editUrl: 'https://github.com/facebook/docusaurus/edit/main/website/',
-        },
-        blog: {
-          showReadingTime: true,
-          // Please change this to your repo.
-          editUrl:
-            'https://github.com/facebook/docusaurus/edit/main/website/blog/',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
@@ -61,13 +55,27 @@ const config = {
             type: 'doc',
             docId: 'intro',
             position: 'left',
-            label: 'Security',
+            label: 'Document',
           },
           // {
           //   type: 'search',
           //   position: 'right',
           // }
           // {to: '/blog', label: 'Blog', position: 'left'},
+          // {
+          //   label: 'Docs',
+          //   position: 'left', // or 'right'
+          //   items: [
+          //     {
+          //       label: 'Category 1',
+          //       to: '/Document',
+          //     },
+          //     {
+          //       label: 'Category 2',
+          //       to: '...',
+          //     },
+          //   ],
+          // },
           {
             href: 'http://citydatahub.kr/',
             label: 'City Data-hub',
