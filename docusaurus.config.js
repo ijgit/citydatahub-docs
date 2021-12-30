@@ -70,8 +70,8 @@ const config = {
                 to: "/docs/security/intro",
               },
               {
-                label: "Category 2",
-                to: "not-available",
+                label: "another_module",
+                to: "/docs/another_module/intro",
               },
             ],
           },
