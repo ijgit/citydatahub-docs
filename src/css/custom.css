@@ -30,11 +30,14 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
 
 
 article h1{
-  padding-bottom: 5rem;
+  border-bottom: 1px solid rgba(95, 95, 95, 0.6);
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+  /* padding-bottom: 5rem; */
 }
 
 article h2, h3{
-  padding-top: 2em;
+  padding-top: 1em;
   padding-bottom: 1em;
 }
 
